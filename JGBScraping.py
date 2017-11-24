@@ -64,8 +64,6 @@ class JGBScraping(object):
         conn = sqlite3.connect("data.db")
         df.to_sql('data', conn, if_exists='replace')
 
-        print(df)
-
         return df
 
     def updateData(self):
@@ -80,8 +78,8 @@ class JGBScraping(object):
         # Get new dataset
         df_new = self.getData(self.url_current)
 
-        # Concat current & new datasets
-        df = pd.concat([df, df_new])
+        # Update current datasets
+        df.update(df_new)
 
         # Save csv
         df.to_csv('data.csv')
@@ -89,8 +87,6 @@ class JGBScraping(object):
         # Save sql database
         conn = sqlite3.connect("data.db")
         df.to_sql('data', conn, if_exists='replace')
-
-        print(df)
 
         return df
 
