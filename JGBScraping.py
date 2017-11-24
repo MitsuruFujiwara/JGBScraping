@@ -64,6 +64,9 @@ class JGBScraping(object):
         conn = sqlite3.connect("data.db")
         df.to_sql('data', conn, if_exists='replace')
 
+        # Close DataBase
+        conn.close()
+
         return df
 
     def updateData(self):
@@ -87,6 +90,9 @@ class JGBScraping(object):
         # Save sql database
         conn = sqlite3.connect("data.db")
         df.to_sql('data', conn, if_exists='replace')
+
+        # Close DataBase
+        conn.close()
 
         return df
 
