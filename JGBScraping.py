@@ -82,7 +82,7 @@ class JGBScraping(object):
         df_new = self.getData(self.url_current)
 
         # Update current datasets
-        df.update(df_new)
+        df = df.combine_first(df_new)
 
         # Save csv
         df.to_csv('data.csv')
