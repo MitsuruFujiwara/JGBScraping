@@ -18,7 +18,7 @@ class JGBScraping(object):
          'JGB_6Y', 'JGB_7Y', 'JGB_8Y', 'JGB_9Y', 'JGB_10Y', 'JGB_15Y', 'JGB_20Y',\
           'JGB_25Y', 'JGB_30Y', 'JGB_40Y']
 
-    def convertDate(self, data):
+    def __convertDate(self, data):
         # A function to convert "wareki" date into "seireki" date
         for d in data:
             d = d.split('.')
@@ -27,7 +27,7 @@ class JGBScraping(object):
             else:
                 yield date(1925+int(d[0][1:]), int(d[1]), int(d[2]))
 
-    def getData(self, url):
+    def __getData(self, url):
         # Load dataset
         _df = pd.read_csv(url)
 
@@ -39,7 +39,7 @@ class JGBScraping(object):
         _df = _df.dropna()
 
         # Set 'date' coulmn as index
-        _df.index = self.convertDate(_df['date'])
+        _df.index = self.__convertDate(_df['date'])
 
         # Replace '-' as numpy nan
         _df = _df.replace('-',np.nan)
@@ -51,8 +51,8 @@ class JGBScraping(object):
 
     def getAllData(self):
         # Get current & historical datasets.
-        df_hist = self.getData(self.url_historical)
-        df_curr = self.getData(self.url_current)
+        df_hist = self.__getData(self.url_historical)
+        df_curr = self.__getData(self.url_current)
 
         # Concat current & historical datasets
         df = pd.concat([df_hist, df_curr])
@@ -79,7 +79,7 @@ class JGBScraping(object):
         df = df.drop('index', axis=1)
 
         # Get new dataset
-        df_new = self.getData(self.url_current)
+        df_new = self.__getData(self.url_current)
 
         # Update current datasets
         df = df.combine_first(df_new)
@@ -100,4 +100,4 @@ if __name__ == '__main__':
     # test
     jgb =JGBScraping()
     jgb.getAllData()
-    jgb.updateData()
+#    jgb.updateData()
