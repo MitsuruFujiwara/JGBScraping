@@ -57,6 +57,9 @@ class JGBScraping(object):
         # Concat current & historical datasets
         df = pd.concat([df_hist, df_curr])
 
+        # change index to datetime
+        df.index = pd.to_datetime(df.index)
+
         # Save csv
         df.to_csv('data.csv')
 
