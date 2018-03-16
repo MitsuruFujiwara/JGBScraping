@@ -57,6 +57,9 @@ class JGBScraping(object):
         # Concat current & historical datasets
         df = pd.concat([df_hist, df_curr])
 
+        # chage datatype
+        df = df.astype(float)
+        
         # change index to datetime
         df.index = pd.to_datetime(df.index)
 
