@@ -29,7 +29,7 @@ class JGBScraping(object):
 
     def __getData(self, url):
         # Load dataset
-        _df = pd.read_csv(url)
+        _df = pd.read_csv(url, encoding="shift-jis")
 
         # Set columns
         _df.columns = self.columns
@@ -59,7 +59,7 @@ class JGBScraping(object):
 
         # chage datatype
         df = df.astype(float)
-        
+
         # change index to datetime
         df.index = pd.to_datetime(df.index)
 
